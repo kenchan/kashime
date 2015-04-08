@@ -1,28 +1,39 @@
 # Proton
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/proton`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Proton is OpenStack Network Managment tool - Alternatives `neutron`
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'proton'
+gem 'proton', github: 'kenchan/proton'
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install proton
-
 ## Usage
 
-TODO: Write usage instructions here
+You need to put fog configuration to home directory.
+
+```
+% cat ~/.fog
+default:
+  openstack_auth_url: "http://your-openstack-endpoint/v2.0/tokens"
+  openstack_username: "admin"
+  openstack_tenant: "admin"
+  openstack_api_key: "admin-no-password"
+```
+
+### Ports
+
+```
+proton ports
+proton ports -o (only available ports)
+proton create_port your-network-name
+```
 
 ## Development
 
@@ -32,7 +43,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/proton/fork )
+1. Fork it ( https://github.com/kenchan/proton/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
