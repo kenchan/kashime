@@ -26,5 +26,12 @@ module Proton
 
       puts tsv
     end
+
+    desc 'create_port', 'create new port'
+    def create_port(network_name)
+      network = Fog::Network[:openstack].networks.find {|n| n.name == network_name }
+
+      puts Fog::Network[:openstack].ports.create(network_id: network.id).inspect
+    end
   end
 end
