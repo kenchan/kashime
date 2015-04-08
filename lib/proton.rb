@@ -1,5 +1,5 @@
-require "proton/version"
+require 'proton/version'
+require 'proton/cli'
 
 module Proton
-  # Your code goes here...
 end
