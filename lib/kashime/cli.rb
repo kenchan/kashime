@@ -4,7 +4,7 @@ require 'csv'
 require 'fog'
 require 'thor'
 
-module Proton
+module Kashime
   class CLI < Thor
 
     desc 'ports', 'show all port list'

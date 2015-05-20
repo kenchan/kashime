@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'proton/version'
+require 'kashime/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'proton'
-  spec.version       = Proton::VERSION
+  spec.name          = 'kashime'
+  spec.version       = Kashime::VERSION
   spec.authors       = ['Kenichi TAKAHASHI']
   spec.email         = ['kenichi.taka@gmail.com']
 

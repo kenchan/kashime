@@ -1,13 +1,13 @@
-# Proton
+# Kashime
 
-Proton is OpenStack Network Managment tool - Alternatives `neutron`
+Kashime is OpenStack Network Managment tool - Alternatives `neutron`
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'proton', github: 'kenchan/proton'
+gem 'kashime', github: 'kenchan/kashime'
 ```
 
 And then execute:
@@ -30,9 +30,9 @@ default:
 ### Ports
 
 ```
-proton ports
-proton ports -o (only available ports)
-proton create_port your-network-name
+kashime ports
+kashime ports -o (only available ports)
+kashime create_port your-network-name
 ```
 
 ## Development
@@ -43,7 +43,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/kenchan/proton/fork )
+1. Fork it ( https://github.com/kenchan/kashime/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
