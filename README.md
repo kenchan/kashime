@@ -33,6 +33,7 @@ default:
 kashime ports
 kashime ports -o (only available ports)
 kashime create_port your-network-name
+kashime cleanup_ports
 ```
 
 ## Development

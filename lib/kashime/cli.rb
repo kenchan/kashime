@@ -33,5 +33,16 @@ module Kashime
 
       puts Fog::Network[:openstack].ports.create(network_id: network.id).inspect
     end
+
+    desc 'cleanup_ports', 'delete all unattached ports'
+    option 'dry-run', type: :boolean, aliases: :d, default: false
+    def cleanup_ports
+      Fog::Network[:openstack].ports.each do |port|
+        if port.device_id.empty?
+          puts "Deleting port id: #{port.id}"
+          port.destroy unless options['dry-run']
+        end
+      end
+    end
   end
 end
