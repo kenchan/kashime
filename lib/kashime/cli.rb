@@ -8,17 +8,18 @@ module Kashime
   class CLI < Thor
 
     desc 'ports', 'show all port list'
-    option :only_availables, type: :boolean, aliases: :o, default: false
+    option 'only-availables', type: :boolean, aliases: :o, default: false
+    option 'with-header', type: :boolean, default: false
     def ports
       headers = %i(id mac_address fixed_ips device_id)
 
       ports = Fog::Network[:openstack].ports
 
-      ports = ports.select {|port| port.device_id.empty? } if options['only_availables']
+      ports = ports.select {|port| port.device_id.empty? } if options['only-availables']
 
       ports = ports.map {|port| port.attributes.slice(*headers) }
 
-      tsv = CSV.generate(headers: headers, write_headers: true, col_sep: "\t") do |csv|
+      tsv = CSV.generate(headers: headers, write_headers: options['with-header'], col_sep: "\t") do |csv|
         ports.each do |port|
           csv << CSV::Row.new(headers, port.values)
         end
