@@ -34,9 +34,9 @@ module Kashime
 
     desc 'create_port', 'create new port'
     def create_port(network_name)
-      network = Fog::Network[:openstack].networks.find {|n| n.name == network_name }
+      network = Yao::Network.list.find {|n| n.name == network_name }
 
-      puts Fog::Network[:openstack].ports.create(network_id: network.id).inspect
+      puts Yao::Port.create(network_id: network.id).inspect
     end
 
     desc 'cleanup_ports', 'delete all unattached ports'
