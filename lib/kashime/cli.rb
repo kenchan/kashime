@@ -15,20 +15,19 @@ module Kashime
 
       ports = Yao::Port.list
 
-      ports = ports.select {|port| port.device_id.empty? } if options['only-availables']
-
-      attrs = ports.map {|port|
-        [
-          port.id,
-          tenant_name(port.tenant_id),
-          port.primary_ip,
-          port.device_id
-        ]
-      }
-
       tsv = CSV.generate(headers: headers, write_headers: options['with-header'], col_sep: "\t") do |csv|
-        attrs.each do |port|
-          csv << CSV::Row.new(headers, port)
+        ports.each do |port|
+          next if options['only-availables'] && port.device_id.present?
+
+          csv << CSV::Row.new(
+            headers,
+            [
+              port.id,
+              tenant_name(port.tenant_id),
+              port.primary_ip,
+              port.device_id
+            ]
+          )
         end
       end
 
