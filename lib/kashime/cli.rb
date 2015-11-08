@@ -42,10 +42,10 @@ module Kashime
     desc 'cleanup_ports', 'delete all unattached ports'
     option 'dry-run', type: :boolean, aliases: :d, default: false
     def cleanup_ports
-      Fog::Network[:openstack].ports.each do |port|
+      Yao::Port.list.each do |port|
         if port.device_id.empty?
           puts "Deleting port id: #{port.id}"
-          port.destroy unless options['dry-run']
+          Yao::Port.destroy(port.id) unless options['dry-run']
         end
       end
     end
