@@ -46,7 +46,7 @@ module Kashime
     def cleanup_ports
       Yao::Port.list.each do |port|
         if port.device_id.empty?
-          puts "Deleting port id: #{port.id}"
+          puts "Deleting port: #{tenant_name(port.tenant_id)} #{port.primary_ip} #{port.id}"
           Yao::Port.destroy(port.id) unless options['dry-run']
         end
       end
