@@ -16,15 +16,16 @@ And then execute:
 
 ## Usage
 
-You need to put fog configuration to home directory.
+You need to put yao configuration to home directory.
 
 ```
-% cat ~/.fog
-default:
-  openstack_auth_url: "http://your-openstack-endpoint/v2.0/tokens"
-  openstack_username: "admin"
-  openstack_tenant: "admin"
-  openstack_api_key: "admin-no-password"
+% cat ~/.kashimerc
+Yao.configure do
+  auth_url    "http://your-openstack-endpoint/v2.0/tokens"
+  tenant_name "my-tenant"
+  username    "your-username"
+  password    "your-password"
+end
 ```
 
 ### Ports
