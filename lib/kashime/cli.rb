@@ -1,7 +1,7 @@
 require 'active_support'
 require 'active_support/core_ext'
 require 'csv'
-require 'fog'
+require 'yao'
 require 'thor'
 
 module Kashime
@@ -11,17 +11,21 @@ module Kashime
     option 'only-availables', type: :boolean, aliases: :o, default: false
     option 'with-header', type: :boolean, default: false
     def ports
-      headers = %i(id mac_address fixed_ips device_id)
+      headers = %i(id mac_address primary_ip device_id)
 
-      ports = Fog::Network[:openstack].ports
+      ports = Yao::Port.list
 
       ports = ports.select {|port| port.device_id.empty? } if options['only-availables']
 
-      ports = ports.map {|port| port.attributes.slice(*headers) }
+      attrs = ports.map {|port|
+        headers.map {|h|
+          port.__send__ h
+        }
+      }
 
       tsv = CSV.generate(headers: headers, write_headers: options['with-header'], col_sep: "\t") do |csv|
-        ports.each do |port|
-          csv << CSV::Row.new(headers, port.values)
+        attrs.each do |port|
+          csv << CSV::Row.new(headers, port)
         end
       end
 
