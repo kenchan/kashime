@@ -11,16 +11,19 @@ module Kashime
     option 'only-availables', type: :boolean, aliases: :o, default: false
     option 'with-header', type: :boolean, default: false
     def ports
-      headers = %i(id mac_address primary_ip device_id)
+      headers = %i(id tenant primary_ip device_id)
 
       ports = Yao::Port.list
 
       ports = ports.select {|port| port.device_id.empty? } if options['only-availables']
 
       attrs = ports.map {|port|
-        headers.map {|h|
-          port.__send__ h
-        }
+        [
+          port.id,
+          tenant_name(port.tenant_id),
+          port.primary_ip,
+          port.device_id
+        ]
       }
 
       tsv = CSV.generate(headers: headers, write_headers: options['with-header'], col_sep: "\t") do |csv|
@@ -48,6 +51,16 @@ module Kashime
           Yao::Port.destroy(port.id) unless options['dry-run']
         end
       end
+    end
+
+    private
+
+    def tenant_name(tenant_id)
+      tenants.find {|t| t.id == tenant_id}.try(:name)
+    end
+
+    def tenants
+      @_tenants ||= Yao::Tenant.list
     end
   end
 end
