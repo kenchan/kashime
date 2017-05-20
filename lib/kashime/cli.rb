@@ -42,9 +42,10 @@ module Kashime
     end
 
     desc 'cleanup_ports', 'delete all unattached ports'
+    option 'tenant', type: :string, aliases: :t, default: nil, desc: 'tenant name'
     option 'dry-run', type: :boolean, aliases: :d, default: false
     def cleanup_ports
-      Yao::Port.list.each do |port|
+      Yao::Port.list(tenant_id: tenant_id(options[:tenant])).each do |port|
         if port.device_id.empty?
           puts "Deleting port: #{tenant_name(port.tenant_id)} #{port.primary_ip} #{port.id}"
           Yao::Port.destroy(port.id) unless options['dry-run']
@@ -53,6 +54,10 @@ module Kashime
     end
 
     private
+
+    def tenant_id(name)
+      tenants.find {|t| t.name == name}.try(:id)
+    end
 
     def tenant_name(tenant_id)
       tenants.find {|t| t.id == tenant_id}.try(:name)
