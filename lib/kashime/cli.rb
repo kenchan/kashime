@@ -64,7 +64,7 @@ module Kashime
     end
 
     def tenants
-      @_tenants ||= Yao::Tenant.list
+      @_tenants ||= Yao::Project.list
     end
   end
 end
